@@ -1,6 +1,10 @@
 # puppyrescue
 
-Empty project.
+This app allows puppy fosters to share information regarding the puppies they are fostering to potential adpoters. This app includes:
+1. Available puppy feed
+2. Form for fosters to post about their puppy
+3. Form for admin to put info about each puppy, add/remove puppies to the available list.
+
 
 ## Building and running on localhost
 

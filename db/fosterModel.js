@@ -4,17 +4,16 @@ const { Schema } = mongoose;
 
 var db = mongoose.connection;
 
-db.on('error', function() {
+db.on('error', function () {
   console.log('mongoose connection error');
 });
 
-db.once('open', function() {
+db.once('open', function () {
   console.log('mongoose connected successfully to foster');
 });
 
 const fosterSchema = new Schema({
   puppy_id: Number,
-  foster_id: Number,
   foster_name: String,
   nightsStayed: Number,
   haveKids: Boolean,
@@ -23,7 +22,11 @@ const fosterSchema = new Schema({
   goodWithAnimals: Boolean,
   disposition: [],
   activityLevel: String,
-  description: String
+  description: String,
+  images: [],
+  color: String,
+  coat: String,
+  tail: String
 });
 
 fosterSchema.index({ puppy_id: 1 })

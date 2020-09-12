@@ -16,14 +16,13 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/puppies', (req, res) => {
   res.status(200).send([
     {
-      puppy_id: 2020858,
+      puppy_id: 858,
       dateOfIntake: '2020-09-05',
       approxDateOfBirth: '2020-06-01',
       weight: 24.5,
       gender: 'male',
       potentialBreed: ['terrier', 'pit', 'bear'],
       availForAdoption: true,
-      curFoster_id: 858,
       curFosterName: "Angie Davidson",
       nightsStayed: 3,
       haveKids: false,
@@ -40,14 +39,13 @@ app.get('/puppies', (req, res) => {
       tail: 'straight'
     },
     {
-      puppy_id: 2020859,
+      puppy_id: 859,
       dateOfIntake: '2020-09-05',
       approxDateOfBirth: '2020-06-15',
       weight: 20.5,
       gender: 'male',
       potentialBreed: ['lab', 'whippet', 'bear'],
       availForAdoption: true,
-      curFoster_id: 859,
       curFosterName: "Mary Ann",
       nightsStayed: 3,
       haveKids: false,
@@ -62,14 +60,13 @@ app.get('/puppies', (req, res) => {
       tail: 'straight'
     },
     {
-      puppy_id: 2020860,
+      puppy_id: 860,
       dateOfIntake: '2020-08-027',
       approxDateOfBirth: '2020-06-01',
       weight: 10.5,
       gender: 'female',
       potentialBreed: ['poodle', 'frog', 'cat'],
       availForAdoption: true,
-      curFoster_id: 858,
       curFosterName: "Angie Davidson",
       nightsStayed: 3,
       haveKids: true,
