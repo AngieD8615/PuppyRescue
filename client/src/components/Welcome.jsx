@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function WelcomeBar() {
+export default function WelcomeBar(props) {
   const classes = useStyles();
 
   return (
@@ -32,7 +32,7 @@ export default function WelcomeBar() {
           <Typography variant="h6" className={classes.title}>
             Puppy Rescue: From Forster to Adopted
           </Typography>
-          <Button color="inherit">Foster</Button>
+          <Button color="inherit" onClick={props.onFosterClick}>Foster</Button>
           <Button color="inherit">Admin</Button>
         </Toolbar>
       </AppBar>

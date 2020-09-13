@@ -22,8 +22,11 @@
     "mongoose": "^5.10.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-dropzone-uploader": "^2.11.0",
     "react-hook-form": "^6.8.1",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "react-select": "^3.1.0",
+    "yup": "^0.29.3"
   },
   "devDependencies": {
     "webpack": "^4.44.1",

@@ -28,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
 
 const ListItem = (props) => {
   const classes = useStyles();
-  console.log("from ListItem", props);
   const { images, puppy_id, gender, potentialBreed, approxDateOfBirth, adoptionFee, snDeposit, dateOfIntake, nightsStayed, haveKids, haveAnimals, activityLevel, disposition, description, color, coat, tail } = props.item;
   return (
     <div className={classes.root}>
@@ -46,11 +45,26 @@ const ListItem = (props) => {
                   Adoption Fee: ${adoptionFee} + ${snDeposit} spay/neuter deposit</b>
               </Typography>
               <Typography variant="body2" gutterBottom>
-                Intake date: {dateOfIntake} <br />
-                Date of birth: {approxDateOfBirth} <br />
-                Possible Breed: {potentialBreed.join('/ ')} <br />
-                Gender: {gender} <br />
-                Date of Birth: {approxDateOfBirth} <br />
+                {(dateOfIntake) ? (
+                  <Typography variant="body2" gutterBottom>
+                    Intake date: {dateOfIntake} <br />
+                  </Typography>) : null }
+                {(approxDateOfBirth) ? (
+                  <Typography variant="body2" gutterBottom>
+                    Date of birth: {approxDateOfBirth} <br />
+                  </Typography>) : null }
+                {(potentialBreed) ? (
+                  <Typography variant="body2" gutterBottom>
+                    Possible Breed: {potentialBreed.join('/ ')} <br />
+                  </Typography>) : null }
+                {(gender) ? (
+                  <Typography variant="body2" gutterBottom>
+                    Gender: {gender} <br />
+                  </Typography>) : null }
+                {(approxDateOfBirth) ? (
+                  <Typography variant="body2" gutterBottom>
+                    Date of Birth: {approxDateOfBirth} <br />
+                  </Typography>) : null }
               </Typography>
             </Grid>
             <Grid item>
