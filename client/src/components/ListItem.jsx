@@ -44,7 +44,7 @@ const ListItem = (props) => {
                 <b>Puppy ID: {puppy_id} <br />
                   Adoption Fee: ${adoptionFee} + ${snDeposit} spay/neuter deposit</b>
               </Typography>
-              <Typography variant="body2" gutterBottom>
+              <>
                 {(dateOfIntake) ? (
                   <Typography variant="body2" gutterBottom>
                     Intake date: {dateOfIntake} <br />
@@ -65,7 +65,7 @@ const ListItem = (props) => {
                   <Typography variant="body2" gutterBottom>
                     Date of Birth: {approxDateOfBirth} <br />
                   </Typography>) : null }
-              </Typography>
+              </>
             </Grid>
             <Grid item>
               <Typography variant="subtitle1">
@@ -73,8 +73,8 @@ const ListItem = (props) => {
               </Typography>
               <Typography variant="body2">
                 Fostered for {nightsStayed} nights <br />
-                Have kids under10? {haveKids ? 'Yes' : 'No'} <br />
-                Have other animals? {haveAnimals ? 'Yes' : 'No'} <br />
+                Has kids under 10 years old? {haveKids ? 'Yes' : 'No'} <br />
+                Has other animals? {haveAnimals ? 'Yes' : 'No'} <br />
               </Typography>
               <Typography variant="subtitle1">
                 <b>The Puppy</b>
