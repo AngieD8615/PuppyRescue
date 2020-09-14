@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ListItem = (props) => {
   const classes = useStyles();
-  const { images, puppy_id, gender, potentialBreed, approxDateOfBirth, adoptionFee, snDeposit, dateOfIntake, nightsStayed, haveKids, haveAnimals, activityLevel, disposition, description, color, coat, tail } = props.item;
+  const { images, puppy_id, gender, potentialBreed, approxDateOfBirth, adoptionFee, snDeposit, dateOfIntake, nightsStayed, haveKids, goodWithKids,  haveAnimals, goodWithAnimals, activityLevel, disposition, description, color, coat, tail } = props.item;
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
@@ -36,7 +36,7 @@ const ListItem = (props) => {
           <Grid container item xs={12} alignItems='flex-start' justify='flex-start'>
             <Grid item style={{ marginRight: '30px' }}>
               <ButtonBase className={classes.image}>
-                <img className={classes.img} alt='puppy' src={images[0]} />
+                <img className={classes.img} alt='puppy' src={images[0] || "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRM8go7139mdYP-0j6U1AmiaFzNkFNLSzsOxp19KndCXXkNWFxpojI3YoaAdSlOzFl9e6RYqSHWPnz_25n3BV1sFqqa984Mu-HNqQ&usqp=CAU&ec=45699845"} />
               </ButtonBase>
             </Grid>
             <Grid item>
@@ -53,17 +53,13 @@ const ListItem = (props) => {
                   <Typography variant="body2" gutterBottom>
                     Date of birth: {approxDateOfBirth} <br />
                   </Typography>) : null }
-                {(potentialBreed) ? (
+                {(Array.isArray(potentialBreed)) ? (
                   <Typography variant="body2" gutterBottom>
                     Possible Breed: {potentialBreed.join('/ ')} <br />
                   </Typography>) : null }
                 {(gender) ? (
                   <Typography variant="body2" gutterBottom>
                     Gender: {gender} <br />
-                  </Typography>) : null }
-                {(approxDateOfBirth) ? (
-                  <Typography variant="body2" gutterBottom>
-                    Date of Birth: {approxDateOfBirth} <br />
                   </Typography>) : null }
               </>
             </Grid>
@@ -74,7 +70,9 @@ const ListItem = (props) => {
               <Typography variant="body2">
                 Fostered for {nightsStayed} nights <br />
                 Has kids under 10 years old? {haveKids ? 'Yes' : 'No'} <br />
+                {haveKids ? <> Puppy { goodWithKids ? 'is' : 'is not' } good with kids <br /></> : null} 
                 Has other animals? {haveAnimals ? 'Yes' : 'No'} <br />
+                {haveAnimals ? <> Puppy { goodWithAnimals ? 'is' : 'is not' } good with animals <br /></> : null} <br />
               </Typography>
               <Typography variant="subtitle1">
                 <b>The Puppy</b>

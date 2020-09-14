@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { Container, Avatar, Button, CssBaseline, TextField, FormControlLabel, Radio, RadioGroup, FormLabel, Checkbox, Link, Grid, Typography, FormGroup } from '@material-ui/core';
+import { FormLabel } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import PetsIcon from '@material-ui/icons/Pets';
 import { useForm } from 'react-hook-form';
-import StyledRadio from './StyledRadio';
 
 const useStyles = makeStyles((theme) => ({
   paper: {

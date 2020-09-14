@@ -18,4 +18,17 @@ const fosterSchema = new Schema({
 
 const Foster = mongoose.model('Foster', fosterSchema);
 
+// var mysort = {foster_name: 1};
+
+// const selectAllFosters = function(callback) {
+//   Foster.find({}, function (err, result) {  
+//     if (err) {
+//       console.log("error query");
+//     } else {
+//       console.log(result);
+//     }
+//   }).sort(mysort);
+// }
+  
+// module.exports = selectAllFosters;
 module.exports = Foster;

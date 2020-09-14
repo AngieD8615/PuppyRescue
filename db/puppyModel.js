@@ -12,6 +12,7 @@ db.once('open', function () {
   console.log('mongoose connected successfully to foster');
 });
 
+
 const puppySchema = new Schema({
   puppy_id: Number,
   foster_name: String,
@@ -23,10 +24,10 @@ const puppySchema = new Schema({
   disposition: [],
   activityLevel: String,
   description: String,
-  images: [],
   color: [],
   coat: String,
   tail: String,
+  images:[],
   dateOfIntake: Date,
   approxDateOfBirth: Date,
   weight: Number,

@@ -33,10 +33,10 @@ class App extends React.Component {
     axios.get('/fosters')
       .then((res) => {
         this.setState({ fosters: res.data })
-        console.log("from App", res.data)
+        //console.log("from App", res.data)
       })
       .then(() => {
-        console.log(this.state)
+        //console.log(this.state)
       })
   }
   getPuppyDataAndGoHome() {
@@ -45,6 +45,7 @@ class App extends React.Component {
         this.setState({ puppyInfo: res.data })
       })
       .then(() => {
+        console.log(this.state.puppyInfo)
         this.setState({ loading: false, viewPage: 'home' })
       });
       this.getFosterData()
@@ -65,6 +66,7 @@ class App extends React.Component {
     return (
       <div>
         <WelcomeBar 
+          toHome={this.getPuppyDataAndGoHome}
           toFosterForm={this.handleStartFosterForm} 
           toAddPuppy={this.handleStartAdminIntakeForm}
           toAddFoster={this.handleAddFoster}
@@ -76,7 +78,7 @@ class App extends React.Component {
             </Typography>
             {(viewPage === 'home') ? <List puppyInfo={puppyInfo} /> : (
               (viewPage === 'FosterForm') ? <FosterForm returnHome={this.getPuppyDataAndGoHome} allFosters={fosters} /> : (
-                (viewPage === 'AdminIntakeForm') ? <AdminIntakeForm returnHome={this.getPuppyDataAndGoHome} allFosters={fosters} /> : (
+                (viewPage === 'AdminIntakeForm') ? <AdminIntakeForm returnHome={this.getPuppyDataAndGoHome} allFosters={fosters} nextPupIndex={puppyInfo.length+1}/> : (
                   (viewPage === 'addFoster') ? <AddFoster returnHome={this.getPuppyDataAndGoHome} allFosters={fosters} /> : null
             )))}
           </>

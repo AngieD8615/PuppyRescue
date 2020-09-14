@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
-import { Avatar, Button, CssBaseline, TextField, FormControlLabel, Radio, RadioGroup, FormLabel, Checkbox, Link, Grid, Typography, FormGroup } from '@material-ui/core';
+import 'date-fns';
+import DateFnsUtils from '@date-io/date-fns';
+import { Avatar, Button, OutlinedInput, InputAdornment, CssBaseline, TextField, FormControlLabel, Radio, RadioGroup, FormLabel, Checkbox, Link, Grid, Typography, FormGroup } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import PetsIcon from '@material-ui/icons/Pets';
 import { useForm } from 'react-hook-form';
-import StyledRadio from './StyledRadio';
 import axios from 'axios';
+import StyledRadio from './StyledRadio';
 import SelectFoster from './SelectFoster';
+import DatePicker from './DatePicker.jsx';
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -36,6 +40,9 @@ export default function AdminIntakeForm(props) {
 
 
   const onSubmit = (data) => {
+    data.puppy_id = Number(data.puppy_id)
+    console.log(data, typeof data.puppy_id);
+
     axios.post('/adminIntakeForm', data)
       .then((res) => {
         console.log("from admin intake submit", res)
@@ -62,6 +69,7 @@ export default function AdminIntakeForm(props) {
             variant="outlined"
             margin="normal"
             inputRef={register}
+            defaultValue={props.nextPupIndex}
             required
             fullWidth
             name="puppy_id"
@@ -69,132 +77,65 @@ export default function AdminIntakeForm(props) {
             type="number"
           />
 
-          <SelectFoster allFosters={props.allFosters}/>
-          {/* date of intake */}
-          {/* date of birth */}
-          {/* weight */}
-          {/* Breed */}
-          {/* Available for adoption */}
-          {/* adoption fee */}
-          {/* sn deposit */}
-          <FormControlLabel
-            control={<Checkbox inputRef={register} name="hasKids" color="primary" />}
-            label="I have kids under 10 at home"
-            labelPlacement="start"
+          <TextField
+            inputRef={register}
+            InputProps={{
+              endAdornment: <InputAdornment position="start">lbs</InputAdornment>,
+            }}
+            required
+            fullWidth
+            name="weight"
+            label="weight"
+            type="number"
+            variant="outlined"
           />
-
-
-          <FormControlLabel
-            control={<Checkbox inputRef={register} name="hasAnimals" color="primary" />}
-            label="I have other animals at home"
-            labelPlacement="start"
-          />
-
-
+          <br /> <br />
           <FormLabel component="legend">Gender</FormLabel>
           <RadioGroup aria-label="gender" name="gender">
-            <FormControlLabel value="female" control={<StyledRadio inputRef={register} name="gender" />} label="Female" />
             <FormControlLabel value="male" control={<StyledRadio inputRef={register} name="gender" />} label="Male" />
+            <FormControlLabel value="female" control={<StyledRadio inputRef={register} name="gender" />} label="Female" />
           </RadioGroup>
 
-          <FormLabel>Length to stay?  </FormLabel>
-          <select defaultValue={0} name="nightsStayed" ref={register}>
-            <option value={0}>0 nights</option>
-            <option value={1}>1 night</option>
-            <option value={2}>2 nights</option>
-            <option value={3}>3 nights</option>
-            <option value={4}>4 nights</option>
-            <option value={5}>5 nights</option>
-            <option value={6}>6 nights</option>
-            <option value={7}>7+ nights</option>
+          {/* <DatePicker /> */}
+
+          <FormControlLabel
+            control={<Checkbox inputRef={register} name="availForAdoption" color="primary" />}
+            label="Avaialable for Adoption"
+            labelPlacement="start"
+          />
+          <br />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            defaultValue={300}
+            inputRef={register}
+            required
+            name="adoptionFee"
+            label="Adoption Fee"
+            type="number"
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            defaultValue={100}
+            inputRef={register}
+            required
+            name="snDeposit"
+            label="S/N deposit"
+            type="number"
+          />
+          <br />
+
+          <select defaultValue='' name="foster_name" ref={register}>
+            {props.allFosters.map((el) => {
+              return <option value={el.foster_name} key={el.foster_name} >{el.foster_name}</option>
+
+            })}
           </select>
-          <br /> <br />
+          {/* date of intake */}
+          {/* date of birth */}
 
-          <FormLabel>Activity Level?  </FormLabel>
-          <select defaultValue='highlyActive' name="activityLevel" ref={register}>
-            <option value='highlyActive'>Highly Active</option>
-            <option value='active'>Active</option>
-            <option value='notActive'>Not Active</option>
-          </select>
-          <br /> <br />
-
-          <FormLabel>Coat?  </FormLabel>
-          <select defaultValue='short' name="coat" ref={register}>
-            <option value='short'>Short</option>
-            <option value='medium'>Medium</option>
-            <option value='long'>Long</option>
-          </select>
-          <br /> <br />
-
-          <FormLabel>Tail?  </FormLabel>
-          <select defaultValue='none' name="Tail" ref={register} defaultValue>
-            <option value='none'>None</option>
-            <option value='straight'>Straight</option>
-            <option value='curly'>Curly</option>
-            <option value='curlsOver'>Curls Over</option>
-          </select>
-          <br /> <br />
-
-          <FormLabel>Coloring</FormLabel>
-          <FormGroup>
-            <FormControlLabel
-              value="Black"
-              control={<Checkbox inputRef={register} name="color" />}
-              label="Black"
-            />
-            <FormControlLabel
-              value="White"
-              control={<Checkbox inputRef={register} name="color" />}
-              label="White"
-            />
-            <FormControlLabel
-              value="Light Brown"
-              control={<Checkbox inputRef={register} name="color" />}
-              label="Light Brown"
-            />
-            <FormControlLabel
-              value="Dark Brown"
-              control={<Checkbox inputRef={register} name="color" />}
-              label="Dark Brown"
-            />
-            <FormControlLabel
-              value="Has a spot(s)"
-              control={<Checkbox inputRef={register} name="color" />}
-              label="Has a spot(s)"
-            />
-          </FormGroup>
-
-          <FormLabel>Disposition</FormLabel>
-          <FormGroup>
-            <FormControlLabel
-              value="Likes everyone"
-              control={<Checkbox inputRef={register} name="Disposition" />}
-              label="Likes everyone"
-            />
-            <FormControlLabel
-              value="Shy with strangers"
-              control={<Checkbox inputRef={register} name="Disposition" />}
-              label="Shy with strangers"
-            />
-            <FormControlLabel
-              value="Playful"
-              control={<Checkbox inputRef={register} name="Disposition" />}
-              label="Playful"
-            />
-            {/* upload images */}
-            <input type='file' name='images' ref={register} />
-
-            <TextField
-              variant="outlined"
-              margin="normal"
-              inputRef={register}
-              required
-              fullWidth
-              id="description"
-              label="Foster Notes"
-              name="description"
-            />
-          </FormGroup>
+          {/* Breed */}
 
           <Button
             type="submit"

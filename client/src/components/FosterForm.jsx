@@ -44,7 +44,13 @@ export default function FosterForm(props) {
   };
 
   const onSubmit = (data) => {
-    data.images = [data.images[0]];
+    // **** futrue goal:
+    // if the name and puppy does not match a previous doc
+    // alert "info does not match our records"
+    // if the name and puppy matched a previous doc
+    
+    // data.images = data.images[0];
+    console.log("onsubmit", data)
     axios.post('/fosterForm', data)
       .then((res) => {
         console.log("from form submit", res)
@@ -67,7 +73,12 @@ export default function FosterForm(props) {
           Please share your experience with your foster 🐶
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
-          <SelectFoster allFosters={props.allFosters} />
+          <select defaultValue='' name="foster_name" ref={register}>
+            {props.allFosters.map((el) => {
+              return <option value={el.foster_name} key={el.foster_name} >{el.foster_name}</option>
+
+            })}
+          </select>
 
           <TextField
             variant="outlined"
@@ -81,7 +92,7 @@ export default function FosterForm(props) {
           />
 
           <FormControlLabel
-            control={<Checkbox inputRef={register} name="hasKids" color="primary" onChange={handleHasKidsChange} />}
+            control={<Checkbox inputRef={register} name="haveKids" color="primary" onChange={handleHasKidsChange} />}
             label="I have kids under 10 at home"
             labelPlacement="start"
           />
@@ -96,7 +107,7 @@ export default function FosterForm(props) {
           ) : null}
 
           <FormControlLabel
-            control={<Checkbox inputRef={register} name="hasAnimals" color="primary" onChange={handleHasAnimalsChange} />}
+            control={<Checkbox inputRef={register} name="haveAnimals" color="primary" onChange={handleHasAnimalsChange} />}
             label="I have other animals at home"
             labelPlacement="start"
           />
@@ -109,13 +120,7 @@ export default function FosterForm(props) {
               </RadioGroup>
             </>
           ) : null}
-
-          <FormLabel component="legend">Gender</FormLabel>
-          <RadioGroup aria-label="gender" name="gender">
-            <FormControlLabel value="female" control={<StyledRadio inputRef={register} name="gender" />} label="Female" />
-            <FormControlLabel value="male" control={<StyledRadio inputRef={register} name="gender" />} label="Male" />
-          </RadioGroup>
-
+          <br />
           <FormLabel>Length to stay?  </FormLabel>
           <select defaultValue={0} name="nightsStayed" ref={register}>
             <option value={0}>0 nights</option>
@@ -146,7 +151,7 @@ export default function FosterForm(props) {
           <br /> <br />
 
           <FormLabel>Tail?  </FormLabel>
-          <select defaultValue='none' name="Tail" ref={register} defaultValue>
+          <select defaultValue='none' name="tail" ref={register} defaultValue>
             <option value='none'>None</option>
             <option value='straight'>Straight</option>
             <option value='curly'>Curly</option>
@@ -187,17 +192,17 @@ export default function FosterForm(props) {
           <FormGroup>
             <FormControlLabel
               value="Likes everyone"
-              control={<Checkbox inputRef={register} name="Disposition" />}
+              control={<Checkbox inputRef={register} name="disposition" />}
               label="Likes everyone"
             />
             <FormControlLabel
               value="Shy with strangers"
-              control={<Checkbox inputRef={register} name="Disposition" />}
+              control={<Checkbox inputRef={register} name="disposition" />}
               label="Shy with strangers"
             />
             <FormControlLabel
               value="Playful"
-              control={<Checkbox inputRef={register} name="Disposition" />}
+              control={<Checkbox inputRef={register} name="disposition" />}
               label="Playful"
             />
             {/* upload images */}
