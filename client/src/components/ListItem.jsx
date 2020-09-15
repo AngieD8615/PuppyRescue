@@ -28,8 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ListItem = (props) => {
   const classes = useStyles();
-  console.log("from ListItem", props);
-  const { images, puppy_id, gender, potentialBreed, approxDateOfBirth, adoptionFee, snDeposit, dateOfIntake, nightsStayed, haveKids, haveAnimals, activityLevel, disposition, description, color, coat, tail } = props.item;
+  const { images, puppy_id, gender, potentialBreed, approxDateOfBirth, adoptionFee, snDeposit, dateOfIntake, nightsStayed, haveKids, goodWithKids, haveAnimals, goodWithAnimals, activityLevel, disposition, description, color, coat, tail } = props.item;
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
@@ -37,7 +36,7 @@ const ListItem = (props) => {
           <Grid container item xs={12} alignItems='flex-start' justify='flex-start'>
             <Grid item style={{ marginRight: '30px' }}>
               <ButtonBase className={classes.image}>
-                <img className={classes.img} alt='puppy' src={images[0]} />
+                <img className={classes.img} alt='puppy' src={images[0] || "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRM8go7139mdYP-0j6U1AmiaFzNkFNLSzsOxp19KndCXXkNWFxpojI3YoaAdSlOzFl9e6RYqSHWPnz_25n3BV1sFqqa984Mu-HNqQ&usqp=CAU&ec=45699845"} />
               </ButtonBase>
             </Grid>
             <Grid item>
@@ -45,13 +44,24 @@ const ListItem = (props) => {
                 <b>Puppy ID: {puppy_id} <br />
                   Adoption Fee: ${adoptionFee} + ${snDeposit} spay/neuter deposit</b>
               </Typography>
-              <Typography variant="body2" gutterBottom>
-                Intake date: {dateOfIntake} <br />
-                Date of birth: {approxDateOfBirth} <br />
-                Possible Breed: {potentialBreed.join('/ ')} <br />
-                Gender: {gender} <br />
-                Date of Birth: {approxDateOfBirth} <br />
-              </Typography>
+              <>
+                {(dateOfIntake) ? (
+                  <Typography variant="body2" gutterBottom>
+                    Intake date: {dateOfIntake} <br />
+                  </Typography>) : null}
+                {(approxDateOfBirth) ? (
+                  <Typography variant="body2" gutterBottom>
+                    Date of birth: {approxDateOfBirth} <br />
+                  </Typography>) : null}
+                {(Array.isArray(potentialBreed)) ? (
+                  <Typography variant="body2" gutterBottom>
+                    Possible Breed: {potentialBreed.join('/ ')} <br />
+                  </Typography>) : null}
+                {(gender) ? (
+                  <Typography variant="body2" gutterBottom>
+                    Gender: {gender} <br />
+                  </Typography>) : null}
+              </>
             </Grid>
             <Grid item>
               <Typography variant="subtitle1">
@@ -59,17 +69,39 @@ const ListItem = (props) => {
               </Typography>
               <Typography variant="body2">
                 Fostered for {nightsStayed} nights <br />
-                Have kids under10? {haveKids ? 'Yes' : 'No'} <br />
-                Have other animals? {haveAnimals ? 'Yes' : 'No'} <br />
+                {(haveKids !== undefined) ? (
+                  <>
+                    Has kids under 10 years old? <b>{haveKids ? 'Yes' : 'No'}</b> <br />
+                  </>
+                ) : null}
+                {haveKids ? <> Puppy {goodWithKids ? 'is' : 'is not'} good with kids <br /></> : null}
+                {(haveAnimals !== undefined) ? (
+                  <>
+                    Has other animals? <b>{haveAnimals ? 'Yes' : 'No'}</b> <br />
+                  </>
+                ) : null}
+                {haveAnimals ? <> Puppy {goodWithAnimals ? 'is' : 'is not'} good with animals <br /></> : null} <br />
               </Typography>
               <Typography variant="subtitle1">
                 <b>The Puppy</b>
               </Typography>
-              <Typography variant="body2" gutterBottom>
-                Color: {color} <br />
-                Coat: {coat} <br />
-                Tail: {tail}
-              </Typography>
+              <>
+                {(color.length !== 0) ? (
+                  <Typography variant="body2" gutterBottom>
+                    Color: {color.join('/ ')} <br />
+                  </Typography>
+                ) : null}
+                {(coat) ? (
+                  <Typography variant="body2" gutterBottom>
+                    Coat: {coat} <br />
+                  </Typography>
+                ) : null}
+                {(tail) ? (
+                  <Typography variant="body2" gutterBottom>
+                    Tail: {tail} <br />
+                  </Typography>
+                ) : null}
+              </>
             </Grid>
           </Grid>
           <Grid container item xs={12} alignItems='flex-start' justify='flex-start'>

@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/test');
+mongoose.connect('mongodb://localhost/RescuePups');
 const { Schema } = mongoose;
 
 var db = mongoose.connection;
@@ -13,34 +13,22 @@ db.once('open', function () {
 });
 
 const fosterSchema = new Schema({
-  puppy_id: Number,
   foster_name: String,
-  nightsStayed: Number,
-  haveKids: Boolean,
-  goodWithKids: Boolean,
-  haveAnimals: Boolean,
-  goodWithAnimals: Boolean,
-  disposition: [],
-  activityLevel: String,
-  description: String,
-  images: [],
-  color: String,
-  coat: String,
-  tail: String
 });
 
-fosterSchema.index({ puppy_id: 1 })
+const Foster = mongoose.model('Foster', fosterSchema);
 
-const FosterInfo = mongoose.model('Foster', fosterSchema);
+// var mysort = {foster_name: 1};
 
-// const selectAll = function(callback) {
-//   Item.find({}, function(err, items) {
-//     if(err) {
-//       callback(err, null);
+// const selectAllFosters = function(callback) {
+//   Foster.find({}, function (err, result) {  
+//     if (err) {
+//       console.log("error query");
 //     } else {
-//       callback(null, items);
+//       console.log(result);
 //     }
-//   });
-// };
-
-module.exports = FosterInfo;
+//   }).sort(mysort);
+// }
+  
+// module.exports = selectAllFosters;
+module.exports = Foster;

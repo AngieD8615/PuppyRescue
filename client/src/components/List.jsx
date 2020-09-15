@@ -9,7 +9,7 @@ const List = (props) => {
       <Grid container>
         <Grid item sm={2} />
           <Grid item xs={12} sm={8}> 
-            {props.puppyInfo.map(item => <ListItem item={item} key={item.puppy_id}/>)}
+            {props.puppyInfo.map(item => <ListItem item={item} key={item._id} />)}
           </Grid>
         <Grid item sm={2} />
       </Grid>
