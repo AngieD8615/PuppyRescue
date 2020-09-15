@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { Container, Avatar, Button, CssBaseline, TextField, FormControlLabel, Radio, RadioGroup, FormLabel, Checkbox, Link, Grid, Typography, FormGroup } from '@material-ui/core';
+import { Container, Avatar, Button, CssBaseline, TextField, FormControlLabel, RadioGroup, FormLabel, Checkbox, Link, Grid, Typography, FormGroup } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import PetsIcon from '@material-ui/icons/Pets';
 import { useForm } from 'react-hook-form';
 import StyledRadio from './StyledRadio';
-import SelectFoster from './SelectFoster';
 import axios from 'axios';
 
 
@@ -35,6 +34,9 @@ export default function FosterForm(props) {
   const { register, handleSubmit } = useForm()
   const [hasKids, setHasKids] = useState(false);
   const [hasAnimals, setHasAnimals] = useState(false);
+  const [picsToAWS, setPicsToAWS] = useState([]);
+  const [imgURL, setImgURL] = useState([]);
+
 
   const handleHasKidsChange = (event) => {
     setHasKids(!hasKids);
@@ -43,15 +45,64 @@ export default function FosterForm(props) {
     setHasAnimals(event.target.checked);
   };
 
+  const multipleFileChangedHandler = (event) => {
+    setPicsToAWS(event.target.files);
+    console.log(event.target.files)
+  };
+
+  const multipleFileUploadHandler = () => {
+    const data = new FormData();
+    let selectedFiles = picsToAWS;
+    console.log(selectedFiles);
+    // If file selected
+    if (selectedFiles) {
+      for (let i = 0; i < selectedFiles.length; i++) {
+        data.append('galleryImage', selectedFiles[i], selectedFiles[i].name);
+      }
+      axios.post('/images', data, {
+        headers: {
+          'accept': 'application/json',
+          'Accept-Language': 'en-US,en;q=0.8',
+          'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
+        }
+      })
+        .then((res) => {
+          console.log(res.data.locationArray)
+          setImgURL(res.data.locationArray);
+        })
+        .then(() => {
+          console.log('imgURL', imgURL)
+        })
+        .catch((error) => {
+          // If another error
+          console.log(error, 'red');
+        });
+    } else {
+      // if file not selected throw error
+      console.log('Please upload file', 'red');
+    }
+  };
+
+
   const onSubmit = (data) => {
     // **** futrue goal:
     // if the name and puppy does not match a previous doc
     // alert "info does not match our records"
     // if the name and puppy matched a previous doc
-    
-    // data.images = data.images[0];
+    let isValid = false;
+    console.log(typeof data.puppy_id, data.foster_name, props.puppyInfo, isValid)
+    props.puppyInfo.forEach((el) => {
+      console.log(typeof el.puppy_id, el.foster_name)
+      if (el.puppy_id === Number(data.puppy_id) && el.foster_name === data.foster_name) {
+        isValid = true;
+      }
+    });
+
+    if (isValid) {
+    data.images = imgURL;
     console.log("onsubmit", data)
-    axios.post('/fosterForm', data)
+
+    axios.put('/fosterForm', data)
       .then((res) => {
         console.log("from form submit", res)
       })
@@ -61,7 +112,11 @@ export default function FosterForm(props) {
       .catch((err) => {
         console.log('fosterForm Post err: ', err)
       })
+    } else {
+      alert('Your information does not match our records.')
+    }
   }
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -74,22 +129,31 @@ export default function FosterForm(props) {
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
           <select defaultValue='' name="foster_name" ref={register}>
+            <option value="name" >Name</option>
             {props.allFosters.map((el) => {
               return <option value={el.foster_name} key={el.foster_name} >{el.foster_name}</option>
-
             })}
           </select>
 
-          <TextField
-            variant="outlined"
-            margin="normal"
-            inputRef={register}
-            required
-            fullWidth
-            name="puppy_id"
-            label="Puppy ID"
-            type="number"
-          />
+          <select defaultValue='' name="puppy_id" ref={register}>
+            <option value='puupy_id' >Puppy ID</option>
+            {props.puppyInfo.map((el) => {
+              return <option value={el.puppy_id} key={el.puppy_id} >{el.puppy_id}</option>
+            })}
+          </select>
+
+          {/* upload images */}
+          <div className="card border-light mb-3" style={{ boxShadow: '0 5px 10px 2px rgba(195,192,192,.5)' }}>
+            <div className="card-header">
+              <h3 style={{ color: '#555', marginLeft: '12px' }}>Upload Images - Max 3MB</h3>
+            </div>
+            <div className="card-body">
+              <input type="file" multiple onChange={multipleFileChangedHandler} />
+              <div className="mt-5">
+                <button type="button" className="btn btn-info" onClick={multipleFileUploadHandler}>Upload!</button>
+              </div>
+            </div>
+          </div>
 
           <FormControlLabel
             control={<Checkbox inputRef={register} name="haveKids" color="primary" onChange={handleHasKidsChange} />}
@@ -135,27 +199,27 @@ export default function FosterForm(props) {
           <br /> <br />
 
           <FormLabel>Activity Level?  </FormLabel>
-          <select defaultValue='highlyActive' name="activityLevel" ref={register}>
-            <option value='highlyActive'>Highly Active</option>
-            <option value='active'>Active</option>
-            <option value='notActive'>Not Active</option>
+          <select defaultValue='Highly Active' name="activityLevel" ref={register}>
+            <option value='Highly Active'>Highly Active</option>
+            <option value='Active'>Active</option>
+            <option value='Not Active'>Not Active</option>
           </select>
           <br /> <br />
 
           <FormLabel>Coat?  </FormLabel>
-          <select defaultValue='short' name="coat" ref={register}>
-            <option value='short'>Short</option>
-            <option value='medium'>Medium</option>
-            <option value='long'>Long</option>
+          <select defaultValue='Short' name="coat" ref={register}>
+            <option value='Short'>Short</option>
+            <option value='Medium'>Medium</option>
+            <option value='Long'>Long</option>
           </select>
           <br /> <br />
 
           <FormLabel>Tail?  </FormLabel>
-          <select defaultValue='none' name="tail" ref={register} defaultValue>
-            <option value='none'>None</option>
-            <option value='straight'>Straight</option>
-            <option value='curly'>Curly</option>
-            <option value='curlsOver'>Curls Over</option>
+          <select defaultValue='None' name="tail" ref={register} defaultValue>
+            <option value='None'>None</option>
+            <option value='Straight'>Straight</option>
+            <option value='Curly'>Curly</option>
+            <option value='Curls Over'>Curls Over</option>
           </select>
           <br /> <br />
 
@@ -205,20 +269,18 @@ export default function FosterForm(props) {
               control={<Checkbox inputRef={register} name="disposition" />}
               label="Playful"
             />
-            {/* upload images */}
-            <input type='file' name='images' ref={register} />
-
-            <TextField
-              variant="outlined"
-              margin="normal"
-              inputRef={register}
-              required
-              fullWidth
-              id="description"
-              label="Foster Notes"
-              name="description"
-            />
           </FormGroup>
+
+          <TextField
+            variant="outlined"
+            margin="normal"
+            inputRef={register}
+            required
+            fullWidth
+            id="description"
+            label="Foster Notes"
+            name="description"
+          />
 
           <Button
             type="submit"
@@ -227,7 +289,7 @@ export default function FosterForm(props) {
             color="primary"
             className={classes.submit}
           >
-            Post
+            {(imgURL.length === 0) ? 'POST WITHOUT IMAGES' : 'POST WITH IMAGES'}
           </Button>
         </form>
       </div>

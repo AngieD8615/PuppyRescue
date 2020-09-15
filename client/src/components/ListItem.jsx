@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ListItem = (props) => {
   const classes = useStyles();
-  const { images, puppy_id, gender, potentialBreed, approxDateOfBirth, adoptionFee, snDeposit, dateOfIntake, nightsStayed, haveKids, goodWithKids,  haveAnimals, goodWithAnimals, activityLevel, disposition, description, color, coat, tail } = props.item;
+  const { images, puppy_id, gender, potentialBreed, approxDateOfBirth, adoptionFee, snDeposit, dateOfIntake, nightsStayed, haveKids, goodWithKids, haveAnimals, goodWithAnimals, activityLevel, disposition, description, color, coat, tail } = props.item;
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
@@ -48,19 +48,19 @@ const ListItem = (props) => {
                 {(dateOfIntake) ? (
                   <Typography variant="body2" gutterBottom>
                     Intake date: {dateOfIntake} <br />
-                  </Typography>) : null }
+                  </Typography>) : null}
                 {(approxDateOfBirth) ? (
                   <Typography variant="body2" gutterBottom>
                     Date of birth: {approxDateOfBirth} <br />
-                  </Typography>) : null }
+                  </Typography>) : null}
                 {(Array.isArray(potentialBreed)) ? (
                   <Typography variant="body2" gutterBottom>
                     Possible Breed: {potentialBreed.join('/ ')} <br />
-                  </Typography>) : null }
+                  </Typography>) : null}
                 {(gender) ? (
                   <Typography variant="body2" gutterBottom>
                     Gender: {gender} <br />
-                  </Typography>) : null }
+                  </Typography>) : null}
               </>
             </Grid>
             <Grid item>
@@ -70,17 +70,29 @@ const ListItem = (props) => {
               <Typography variant="body2">
                 Fostered for {nightsStayed} nights <br />
                 Has kids under 10 years old? {haveKids ? 'Yes' : 'No'} <br />
-                {haveKids ? <> Puppy { goodWithKids ? 'is' : 'is not' } good with kids <br /></> : null} 
+                {haveKids ? <> Puppy {goodWithKids ? 'is' : 'is not'} good with kids <br /></> : null}
                 Has other animals? {haveAnimals ? 'Yes' : 'No'} <br />
-                {haveAnimals ? <> Puppy { goodWithAnimals ? 'is' : 'is not' } good with animals <br /></> : null} <br />
+                {haveAnimals ? <> Puppy {goodWithAnimals ? 'is' : 'is not'} good with animals <br /></> : null} <br />
               </Typography>
               <Typography variant="subtitle1">
                 <b>The Puppy</b>
               </Typography>
               <Typography variant="body2" gutterBottom>
-                Color: {color} <br />
-                Coat: {coat} <br />
-                Tail: {tail}
+                {(color.length !== 0) ? (
+                  <Typography variant="body2" gutterBottom>
+                    Color: ${color.join('/ ')} <br />
+                  </Typography>
+                ) : null}
+                {(coat) ? (
+                  <Typography variant="body2" gutterBottom>
+                    Coat: {coat} <br />
+                  </Typography>
+                ) : null}
+                {(tail) ? (
+                  <Typography variant="body2" gutterBottom>
+                    Tail: {tail} <br />
+                  </Typography>
+                ) : null}
               </Typography>
             </Grid>
           </Grid>

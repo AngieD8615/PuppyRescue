@@ -77,7 +77,7 @@ class App extends React.Component {
               There will be {puppyInfo.length} puppies available for adoption
             </Typography>
             {(viewPage === 'home') ? <List puppyInfo={puppyInfo} /> : (
-              (viewPage === 'FosterForm') ? <FosterForm returnHome={this.getPuppyDataAndGoHome} allFosters={fosters} /> : (
+              (viewPage === 'FosterForm') ? <FosterForm returnHome={this.getPuppyDataAndGoHome} allFosters={fosters} puppyInfo={puppyInfo}/> : (
                 (viewPage === 'AdminIntakeForm') ? <AdminIntakeForm returnHome={this.getPuppyDataAndGoHome} allFosters={fosters} nextPupIndex={puppyInfo.length+1}/> : (
                   (viewPage === 'addFoster') ? <AddFoster returnHome={this.getPuppyDataAndGoHome} allFosters={fosters} /> : null
             )))}
