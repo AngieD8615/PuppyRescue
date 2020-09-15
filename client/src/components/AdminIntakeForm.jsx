@@ -39,37 +39,43 @@ const useStyles = makeStyles((theme) => ({
 export default function AdminIntakeForm(props) {
   const classes = useStyles();
   const { register, handleSubmit } = useForm();
-  const [breed, setBreed] = useState([]);
+  const [breeds, setBreeds] = useState([]);
   const [curBreed, setCurBreed] = useState('');
 
 
   const handleBreedOnChange = (event) => {
-    console.log(curBreed)
     setCurBreed(event.target.value)
   }
 
-  const handleRemoveBreed = (event) => {
-    console.log()
+  const handleRemoveBreed = (index) => {
+    let revisedBreeds = breeds.slice();
+    for (var i = 0; i < revisedBreeds.length - 1; i++) {
+      if (i >= index) {
+        revisedBreeds[i] = breeds[i+1]
+      }
+    }
+    revisedBreeds.pop()
+    setBreeds( revisedBreeds )
+  
   }
   const handleAddBreed = () => {
     let capitalizedBreed = capitalizeName(curBreed);
 
     //ensure that the add breed is unique
     let isUniqueBreed = true
-    for (var i = 0; i < breed.length; i++) {
-      if (breed[i] === capitalizedBreed) {
+    for (var i = 0; i < breeds.length; i++) {
+      if (breeds[i] === capitalizedBreed) {
         isUniqueBreed = false;
         break;
       }
     };
-    (isUniqueBreed) ? setBreed(breed.concat(capitalizedBreed)) : alert(`Already have ${capitalizedBreed}`)
+    (isUniqueBreed) ? setBreeds(breeds.concat(capitalizedBreed)) : alert(`Already have ${capitalizedBreed}`)
     setCurBreed('')
   }
 
   const onSubmit = (data) => {
-    data.potentialBreed = breed;
+    data.potentialBreed = breeds;
     data.puppy_id = Number(data.puppy_id)
-    console.log(data);
 
     axios.post('/adminIntakeForm', data)
       .then((res) => {
@@ -126,7 +132,6 @@ export default function AdminIntakeForm(props) {
 
           {/* Breed */}
           <TextField
-            inputRef={register}
             fullWidth
             name="breed"
             label="Breed"
@@ -144,11 +149,11 @@ export default function AdminIntakeForm(props) {
             Add a potential breed
           </Button>
           <Typography variant="body1" gutterBottom>
-            The breed is currently set to: {(breed.length === 0) ? 'unknown' :
-              breed.map((el, index) => {
+            The breed is currently set to: {(breeds.length === 0) ? 'unknown' :
+              breeds.map((el, index) => {
                 return (
                   <Tooltip title="remove" key={el} arrow>
-                    <Button type='button' onClick={handleRemoveBreed} aria-label={el}>{(index < breed.length - 1) ? `${el} /` : `${el}`}</Button>
+                    <Button type='button' onClick={() => { handleRemoveBreed(index) }} aria-label={el}>{(index < breeds.length - 1) ? `${el} /` : `${el}`}</Button>
                   </Tooltip>
                 )
               })
