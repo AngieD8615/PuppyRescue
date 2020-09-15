@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Container, Avatar, Button, CssBaseline, TextField, FormControlLabel, RadioGroup, FormLabel, Checkbox, Link, Grid, Typography, FormGroup } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import PetsIcon from '@material-ui/icons/Pets';
+import HourglassFullTwoToneIcon from '@material-ui/icons/HourglassFullTwoTone';
+import CheckCircleTwoToneIcon from '@material-ui/icons/CheckCircleTwoTone';
 import { useForm } from 'react-hook-form';
 import StyledRadio from './StyledRadio';
 import axios from 'axios';
@@ -36,6 +38,7 @@ export default function FosterForm(props) {
   const [hasAnimals, setHasAnimals] = useState(false);
   const [picsToAWS, setPicsToAWS] = useState([]);
   const [imgURL, setImgURL] = useState([]);
+  const [imgIsLoading, setImgIsLoading] = useState(false);
 
 
   const handleHasKidsChange = (event) => {
@@ -47,13 +50,14 @@ export default function FosterForm(props) {
 
   const multipleFileChangedHandler = (event) => {
     setPicsToAWS(event.target.files);
-    console.log(event.target.files)
+    console.log("CH", event.target.files)
   };
 
   const multipleFileUploadHandler = () => {
+    setImgIsLoading(true);
     const data = new FormData();
     let selectedFiles = picsToAWS;
-    console.log(selectedFiles);
+    console.log("from MFUH", selectedFiles);
     // If file selected
     if (selectedFiles) {
       for (let i = 0; i < selectedFiles.length; i++) {
@@ -72,6 +76,7 @@ export default function FosterForm(props) {
         })
         .then(() => {
           console.log('imgURL', imgURL)
+          setImgIsLoading(false);
         })
         .catch((error) => {
           // If another error
@@ -85,10 +90,7 @@ export default function FosterForm(props) {
 
 
   const onSubmit = (data) => {
-    // **** futrue goal:
-    // if the name and puppy does not match a previous doc
-    // alert "info does not match our records"
-    // if the name and puppy matched a previous doc
+    // validate that faster/puppyID match previous records
     let isValid = false;
     console.log(typeof data.puppy_id, data.foster_name, props.puppyInfo, isValid)
     props.puppyInfo.forEach((el) => {
@@ -99,19 +101,19 @@ export default function FosterForm(props) {
     });
 
     if (isValid) {
-    data.images = imgURL;
-    console.log("onsubmit", data)
+      data.images = imgURL;
+      console.log("onsubmit", data)
 
-    axios.put('/fosterForm', data)
-      .then((res) => {
-        console.log("from form submit", res)
-      })
-      .then(() => {
-        props.returnHome()
-      })
-      .catch((err) => {
-        console.log('fosterForm Post err: ', err)
-      })
+      axios.put('/fosterForm', data)
+        .then((res) => {
+          console.log("from form submit", res)
+        })
+        .then(() => {
+          props.returnHome()
+        })
+        .catch((err) => {
+          console.log('fosterForm Post err: ', err)
+        })
     } else {
       alert('Your information does not match our records.')
     }

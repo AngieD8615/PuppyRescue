@@ -69,18 +69,26 @@ const ListItem = (props) => {
               </Typography>
               <Typography variant="body2">
                 Fostered for {nightsStayed} nights <br />
-                Has kids under 10 years old? {haveKids ? 'Yes' : 'No'} <br />
+                {(haveKids !== undefined) ? (
+                  <>
+                    Has kids under 10 years old? <b>{haveKids ? 'Yes' : 'No'}</b> <br />
+                  </>
+                ) : null}
                 {haveKids ? <> Puppy {goodWithKids ? 'is' : 'is not'} good with kids <br /></> : null}
-                Has other animals? {haveAnimals ? 'Yes' : 'No'} <br />
+                {(haveAnimals !== undefined) ? (
+                  <>
+                    Has other animals? <b>{haveAnimals ? 'Yes' : 'No'}</b> <br />
+                  </>
+                ) : null}
                 {haveAnimals ? <> Puppy {goodWithAnimals ? 'is' : 'is not'} good with animals <br /></> : null} <br />
               </Typography>
               <Typography variant="subtitle1">
                 <b>The Puppy</b>
               </Typography>
-              <Typography variant="body2" gutterBottom>
+              <>
                 {(color.length !== 0) ? (
                   <Typography variant="body2" gutterBottom>
-                    Color: ${color.join('/ ')} <br />
+                    Color: {color.join('/ ')} <br />
                   </Typography>
                 ) : null}
                 {(coat) ? (
@@ -93,7 +101,7 @@ const ListItem = (props) => {
                     Tail: {tail} <br />
                   </Typography>
                 ) : null}
-              </Typography>
+              </>
             </Grid>
           </Grid>
           <Grid container item xs={12} alignItems='flex-start' justify='flex-start'>

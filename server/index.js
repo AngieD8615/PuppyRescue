@@ -2,7 +2,7 @@ var express = require('express');
 const faker = require('faker');
 const Foster = require('../db/fosterModel.js');
 const selectAllFosters = require('../db/fosterModel.js');
-var Puppies = require('../db/puppyModel.js');
+const Puppies = require('../db/puppyModel.js');
 const aws = require('aws-sdk');
 const multerS3 = require('multer-s3');
 const multer = require('multer');
@@ -53,6 +53,7 @@ const PuppyGallery = multer({
 }).array('galleryImage', 4);
 
 app.post('/images', (req, res) => {
+  console.log('server fired')
   PuppyGallery(req, res, (error) => {
     console.log('files', req.files);
     if (error) {
@@ -91,31 +92,6 @@ app.get('/puppies', (req, res) => {
       console.log(data)
       res.status(200).send(data)
     });
-  // res.status(200).send(
-  //   [
-  // {
-  //   puppy_id: 858,
-  //   foster_name: "Angie Davidson",
-  //   nightsStayed: 3,
-  //   haveKids: false,
-  //   haveAnimals: true,
-  //   goodWithAnimals: true,
-  //   disposition: ['shy', 'curious', 'cuddler'],
-  //   activityLevel: 'not very',
-  //   description: 'very sweet but also shy',
-  //   color: ['Black'],
-  //   coat: 'short',
-  //   tail: 'straight'
-  //   dateOfIntake: '2020-09-05',
-  //   approxDateOfBirth: '2020-06-01',
-  //   weight: 24.5,
-  //   potentialBreed: ['terrier', 'pit', 'bear'],
-  //   gender: 'male',
-  //   availForAdoption: true,
-  //   adoptionFee: 300,
-  //   snDeposit: 100,
-  // }
-  //   ])
 });
 
 app.get('/fosters', (req, res) => {
@@ -140,6 +116,7 @@ app.put('/fosterForm', (req, res) => {
 });
 
 app.post('/adminIntakeForm', (req, res) => {
+  console.log('admin', req.body)
   Puppies
   .create(req.body)
   .then(() => {

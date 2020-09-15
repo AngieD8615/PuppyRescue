@@ -31,7 +31,7 @@ const puppySchema = new Schema({
   dateOfIntake: Date,
   approxDateOfBirth: Date,
   weight: Number,
-  potenialBreed: [],
+  potentialBreed: [],
   gender: String,
   availForAdoption: Boolean,
   foster_history: Number,

@@ -10,6 +10,8 @@ import axios from 'axios';
 import StyledRadio from './StyledRadio';
 import SelectFoster from './SelectFoster';
 import DatePicker from './DatePicker.jsx';
+import capitalizeName from './CapitalizeName.js';
+import Tooltip from '@material-ui/core/Tooltip';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -36,12 +38,38 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AdminIntakeForm(props) {
   const classes = useStyles();
-  const { register, handleSubmit } = useForm()
+  const { register, handleSubmit } = useForm();
+  const [breed, setBreed] = useState([]);
+  const [curBreed, setCurBreed] = useState('');
 
+
+  const handleBreedOnChange = (event) => {
+    console.log(curBreed)
+    setCurBreed(event.target.value)
+  }
+
+  const handleRemoveBreed = (event) => {
+    console.log()
+  }
+  const handleAddBreed = () => {
+    let capitalizedBreed = capitalizeName(curBreed);
+
+    //ensure that the add breed is unique
+    let isUniqueBreed = true
+    for (var i = 0; i < breed.length; i++) {
+      if (breed[i] === capitalizedBreed) {
+        isUniqueBreed = false;
+        break;
+      }
+    };
+    (isUniqueBreed) ? setBreed(breed.concat(capitalizedBreed)) : alert(`Already have ${capitalizedBreed}`)
+    setCurBreed('')
+  }
 
   const onSubmit = (data) => {
+    data.potentialBreed = breed;
     data.puppy_id = Number(data.puppy_id)
-    console.log(data, typeof data.puppy_id);
+    console.log(data);
 
     axios.post('/adminIntakeForm', data)
       .then((res) => {
@@ -85,7 +113,7 @@ export default function AdminIntakeForm(props) {
             required
             fullWidth
             name="weight"
-            label="weight"
+            label="Weight"
             type="number"
             variant="outlined"
           />
@@ -95,6 +123,37 @@ export default function AdminIntakeForm(props) {
             <FormControlLabel value="male" control={<StyledRadio inputRef={register} name="gender" />} label="Male" />
             <FormControlLabel value="female" control={<StyledRadio inputRef={register} name="gender" />} label="Female" />
           </RadioGroup>
+
+          {/* Breed */}
+          <TextField
+            inputRef={register}
+            fullWidth
+            name="breed"
+            label="Breed"
+            type="text"
+            variant="outlined"
+            value={curBreed}
+            onChange={handleBreedOnChange}
+          />
+          <Button
+            type='button'
+            variant="contained"
+            color="primary"
+            onClick={handleAddBreed}
+          >
+            Add a potential breed
+          </Button>
+          <Typography variant="body1" gutterBottom>
+            The breed is currently set to: {(breed.length === 0) ? 'unknown' :
+              breed.map((el, index) => {
+                return (
+                  <Tooltip title="remove" key={el} arrow>
+                    <Button type='button' onClick={handleRemoveBreed} aria-label={el}>{(index < breed.length - 1) ? `${el} /` : `${el}`}</Button>
+                  </Tooltip>
+                )
+              })
+            }
+          </Typography>
 
           {/* <DatePicker /> */}
 
@@ -134,8 +193,6 @@ export default function AdminIntakeForm(props) {
           </select>
           {/* date of intake */}
           {/* date of birth */}
-
-          {/* Breed */}
 
           <Button
             type="submit"
