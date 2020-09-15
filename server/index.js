@@ -120,7 +120,7 @@ app.get('/puppies', (req, res) => {
 
 app.get('/fosters', (req, res) => {
   Foster
-    .find({})
+    .find({}, null, {sort: {foster_name: 1}})
     .then((data) => {
       res.status(200).send(data)
     })

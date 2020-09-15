@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
+import capitalizeName from './CapitalizeName';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -28,30 +29,33 @@ const useStyles = makeStyles((theme) => ({
 export default function AddFoster(props) {
   const classes = useStyles();
   const { register, handleSubmit } = useForm()
-
+  console.log(props.allFosters) // [{id, foster_name}, {id, foster_name}, {id, foster_name}]
   const onSubmit = (data) => {
-    let newFoster = true;
-    
+    data.foster_name = capitalizeName(data.foster_name)
+
+    //ensure unique foster name
+    let isUniqueName = true
     for (var i = 0; i < props.allFosters.length; i++) {
       if (props.allFosters[i].foster_name === data.foster_name) {
-        newFoster = false;
+        isUniqueName = false;
+        break;
       }
-    }
+    };
 
-    (newFoster) ? (
-    axios.post('/addFoster', data)
-      .then((res) => {
-        console.log("from add foster", res)
-      })
-      .then(() => {
-        props.returnHome()
-      })
-      .catch((err) => {
-        console.log('add foster Post err: ', err)
-      })
+    (isUniqueName) ? (
+      axios.post('/addFoster', data)
+        .then((res) => {
+          console.log("from add foster", res)
+        })
+        .then(() => {
+          props.returnHome()
+        })
+        .catch((err) => {
+          console.log('add foster Post err: ', err)
+        })
     ) : alert(`${data.foster_name} is already registered as a foster`)
   }
-  console.log("fosters", props.allFosters)
+
   return (
 
     <Container component="main" maxWidth="xs">
