@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import AdminMenu from './AdminMenuClick';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,21 +20,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function WelcomeBar() {
+export default function WelcomeBar(props) {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={props.toHome}>
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
             Puppy Rescue: From Forster to Adopted
           </Typography>
-          <Button color="inherit">Foster</Button>
-          <Button color="inherit">Admin</Button>
+          <Button color="inherit" onClick={props.toFosterForm}>Foster</Button>
+          <AdminMenu toAddFoster={props.toAddFoster} toAddPuppy={props.toAddPuppy} />
         </Toolbar>
       </AppBar>
 
