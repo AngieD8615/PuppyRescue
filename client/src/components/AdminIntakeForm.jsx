@@ -10,7 +10,7 @@ import axios from 'axios';
 import StyledRadio from './StyledRadio';
 import SelectFoster from './SelectFoster';
 import DatePicker from './DatePicker.jsx';
-import capitalizeName from './CapitalizeName.js';
+import formatName from './formatName.js';
 import Tooltip from '@material-ui/core/Tooltip';
 
 
@@ -41,7 +41,16 @@ export default function AdminIntakeForm(props) {
   const { register, handleSubmit } = useForm();
   const [breeds, setBreeds] = useState([]);
   const [curBreed, setCurBreed] = useState('');
+  const [dateOfIntake, setDateOfIntake] = React.useState(new Date);
+  const [approxDateOfBirth, setApproxDateOfBirth] = React.useState(new Date);
 
+  const handleIntakeDateChange = (date) => {
+    setDateOfIntake(date);
+  }
+
+  const handleBirthDateChange = (date) => {
+    setApproxDateOfBirth(date);
+  };
 
   const handleBreedOnChange = (event) => {
     setCurBreed(event.target.value)
@@ -59,24 +68,25 @@ export default function AdminIntakeForm(props) {
   
   }
   const handleAddBreed = () => {
-    let capitalizedBreed = capitalizeName(curBreed);
+    let formatBreed = formatName(curBreed);
 
     //ensure that the add breed is unique
     let isUniqueBreed = true
     for (var i = 0; i < breeds.length; i++) {
-      if (breeds[i] === capitalizedBreed) {
+      if (breeds[i] === formatBreed) {
         isUniqueBreed = false;
         break;
       }
     };
-    (isUniqueBreed) ? setBreeds(breeds.concat(capitalizedBreed)) : alert(`Already have ${capitalizedBreed}`)
+    (isUniqueBreed) ? setBreeds(breeds.concat(formatBreed)) : alert(`Already have ${formatBreed}`)
     setCurBreed('')
   }
 
   const onSubmit = (data) => {
     data.potentialBreed = breeds;
     data.puppy_id = Number(data.puppy_id)
-
+    data.dateOfIntake = dateOfIntake
+    data.approxDateOfBirth = approxDateOfBirth
     axios.post('/adminIntakeForm', data)
       .then((res) => {
         console.log("from admin intake submit", res)
@@ -99,6 +109,11 @@ export default function AdminIntakeForm(props) {
           Intake 🐶 Data
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
+          
+          
+          <DatePicker dateOfIntake={dateOfIntake} handleIntakeDateChange={handleIntakeDateChange} approxDateOfBirth={approxDateOfBirth} handleBirthDateChange={handleBirthDateChange} />
+          
+          
           <TextField
             variant="outlined"
             margin="normal"
@@ -153,7 +168,7 @@ export default function AdminIntakeForm(props) {
               breeds.map((el, index) => {
                 return (
                   <Tooltip title="remove" key={el} arrow>
-                    <Button type='button' onClick={() => { handleRemoveBreed(index) }} aria-label={el}>{(index < breeds.length - 1) ? `${el} /` : `${el}`}</Button>
+                    <Button type='button' onClick={() => handleRemoveBreed(index)} aria-label={el}>{(index < breeds.length - 1) ? `${el} /` : `${el}`}</Button>
                   </Tooltip>
                 )
               })

@@ -7,6 +7,13 @@ import Typography from '@material-ui/core/Typography';
 import FosterForm from './components/FosterForm.jsx';
 import AdminIntakeForm from './components/AdminIntakeForm.jsx';
 import AddFoster from './components/AddFoster.jsx';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+
 
 class App extends React.Component {
   constructor(props) {
@@ -33,11 +40,7 @@ class App extends React.Component {
     axios.get('/fosters')
       .then((res) => {
         this.setState({ fosters: res.data })
-        //console.log("from App", res.data)
-      })
-      .then(() => {
-        //console.log(this.state)
-      })
+      });
   }
   getPuppyDataAndGoHome() {
     axios.get('/puppies')

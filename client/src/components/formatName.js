@@ -1,4 +1,4 @@
-export default function capitalizeName (str) {
+export default function formatName (str) {
   let name = str.toLowerCase();
   let nameArr = name.split('');
   nameArr[0] = nameArr[0].toUpperCase();

@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
+import { format } from "date-fns";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,7 +29,9 @@ const useStyles = makeStyles((theme) => ({
 
 const ListItem = (props) => {
   const classes = useStyles();
-  const { images, puppy_id, gender, potentialBreed, approxDateOfBirth, adoptionFee, snDeposit, dateOfIntake, nightsStayed, haveKids, goodWithKids, haveAnimals, goodWithAnimals, activityLevel, disposition, description, color, coat, tail } = props.item;
+  const { images, puppy_id, gender, potentialBreed, approxDateOfBirth, adoptionFee, snDeposit,
+    dateOfIntake, nightsStayed, haveKids, goodWithKids, haveAnimals, goodWithAnimals, activityLevel, 
+    disposition, description, color, coat, tail } = props.item;
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>

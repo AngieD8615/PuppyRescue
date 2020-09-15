@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, CssBaseline, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
-import capitalizeName from './CapitalizeName';
+import formatName from './formatName';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -29,9 +29,12 @@ const useStyles = makeStyles((theme) => ({
 export default function AddFoster(props) {
   const classes = useStyles();
   const { register, handleSubmit } = useForm()
+  
   console.log(props.allFosters) // [{id, foster_name}, {id, foster_name}, {id, foster_name}]
+  
   const onSubmit = (data) => {
-    data.foster_name = capitalizeName(data.foster_name)
+    
+    data.foster_name = formatName(data.foster_name)
 
     //ensure unique foster name
     let isUniqueName = true
