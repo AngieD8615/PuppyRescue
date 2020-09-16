@@ -1,4 +1,5 @@
-var express = require('express');
+var PORT = process.env.PORT || 3100
+const express = require('express');
 const faker = require('faker');
 const Foster = require('../db/fosterModel.js');
 const selectAllFosters = require('../db/fosterModel.js');
@@ -136,6 +137,6 @@ app.post('/addFoster', (req, res) => {
     });
 });
 
-app.listen(3100, function () {
-  console.log('listening on port 3100!');
+app.listen(PORT, function () {
+  console.log(`Listening on port ${PORT}!`);
 });
