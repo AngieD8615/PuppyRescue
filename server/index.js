@@ -19,8 +19,8 @@ app.use(express.urlencoded({ extended: true }));
 
 
 const s3 = new aws.S3({
-  accessKeyId: ACCESSKEYID,
-  secretAccessKey: SECRETACCESSKEY,
+  accessKeyId: process.env.ACCESSKEYID,
+  secretAccessKey: process.env.SECRETACCESSKEY,
   Bucket: 'rescuepuppies'
 });
 

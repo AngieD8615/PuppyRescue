@@ -1,6 +1,6 @@
 require('dotenv').config()
 var mongoose = require('mongoose');
-mongoose.connect(`mongodb+srv://${DB_USER}:${DB_PASS}@puppyrescue.baqif.mongodb.net/puppyRescue?retryWrites=true&w=majority`);
+mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@puppyrescue.baqif.mongodb.net/puppyRescue?retryWrites=true&w=majority`);
 const { Schema } = mongoose;
 
 var db = mongoose.connection;
