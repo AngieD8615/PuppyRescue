@@ -1,6 +1,5 @@
 var PORT = process.env.PORT || 3100
 const express = require('express');
-const faker = require('faker');
 const Foster = require('../db/fosterModel.js');
 const selectAllFosters = require('../db/fosterModel.js');
 const Puppies = require('../db/puppyModel.js');
