@@ -48,7 +48,7 @@ class App extends React.Component {
         this.setState({ puppyInfo: res.data })
       })
       .then(() => {
-        console.log(this.state.puppyInfo)
+        // console.log(this.state.puppyInfo)
         this.setState({ loading: false, viewPage: 'home' })
       });
       this.getFosterData()
