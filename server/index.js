@@ -10,6 +10,7 @@ const multer = require('multer');
 const path = require('path');
 const url = require('url');
 const secretAccess = require('../awsAccess.js')
+require('dotenv').config()
 
 var app = express();
 
@@ -19,8 +20,8 @@ app.use(express.urlencoded({ extended: true }));
 
 
 const s3 = new aws.S3({
-  accessKeyId: secretAccess.accessKeyID,
-  secretAccessKey: secretAccess.secretAccessKey,
+  accessKeyId: ACCESSKEYID,
+  secretAccessKey: SECRETACCESSKEY,
   Bucket: 'rescuepuppies'
 });
 
