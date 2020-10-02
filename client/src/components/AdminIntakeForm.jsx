@@ -179,7 +179,7 @@ export default function AdminIntakeForm(props) {
 
           <FormControlLabel
             control={<Checkbox inputRef={register} name="availForAdoption" color="primary" />}
-            label="Avaialable for Adoption"
+            label="Available for Adoption"
             labelPlacement="start"
           />
           <br />

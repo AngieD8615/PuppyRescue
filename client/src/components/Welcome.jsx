@@ -31,7 +31,7 @@ export default function WelcomeBar(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            Puppy Rescue: From Forster to Adopted
+            Puppy Rescue: From Foster to Adopted
           </Typography>
           <Button color="inherit" onClick={props.toFosterForm}>Foster</Button>
           <AdminMenu toAddFoster={props.toAddFoster} toAddPuppy={props.toAddPuppy} />
