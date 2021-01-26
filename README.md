@@ -7,9 +7,9 @@ This app allows puppy fosters to share information regarding the puppies they ar
 2. A form for admin to add incoming puppies
 3. A form for fosters to give information on the puppy that they are currently fostering
 
-<img src="/puppyRescueFeed.png" width="200">
-<img src="/postIntake.png" width="200">
-<img src="/fosterForm.png" width="200">
+<img align="center" src="/puppyRescueFeed.png" width="450">
+<img align="center" src="/postIntake.png" width="200">
+<img align="center" src="/fosterForm.png" width="200">
 
 ## Tech
 NodeJS, Express, MongoDb, Mongoose, React, HTML, Material-UI
