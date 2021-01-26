@@ -65,8 +65,8 @@ export default function AdminIntakeForm(props) {
     }
     revisedBreeds.pop()
     setBreeds( revisedBreeds )
-  
   }
+  
   const handleAddBreed = () => {
     let formatBreed = formatName(curBreed);
 

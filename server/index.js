@@ -46,7 +46,7 @@ const PuppyGallery = multer({
       cb(null, path.basename(file.originalname, path.extname(file.originalname)) + '-' + Date.now() + path.extname(file.originalname))
     }
   }),
-  limits: { fileSize: 3000000 }, // In bytes: 3000000 bytes = 3 MB
+  limits: { fileSize: 5000000 }, // In bytes: 5000000 bytes = 5 MB
   fileFilter: function (req, file, cb) {
     checkFileType(file, cb);
   }

@@ -1,10 +1,19 @@
-# puppyrescue
+# PuppyRescue
 
-This app allows puppy fosters to share information regarding the puppies they are fostering to potential adpoters. This app includes:
-1. Available puppy feed
-2. Form for fosters to post about their puppy
-3. Form for admin to put info about each puppy, add/remove puppies to the available list.
+This app allows puppy fosters to share information regarding the puppies they are fostering to people looking to adopt from the rescue. This app includes:
 
+
+1. A dynamic feed displaying available puppies
+2. A form for admin to add incoming puppies
+3. A form for fosters to give information on the puppy that they are currently fostering
+
+
+![Puppy Rescue main feed] (puppyRescueFeed.png)
+## Tech
+NodeJS, Express, MongoDb, Mongoose, React, HTML, Material-UI
+Used AWS S3 buckets for loading images
+Built using a RESTful API
+Was deployed on Heroku
 
 ## Building and running on localhost
 
