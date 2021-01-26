@@ -1,21 +1,22 @@
 # PuppyRescue
 
-This app allows puppy fosters to share information regarding the puppies they are fostering to people looking to adopt from the rescue. This app includes:
-
-
-1. A dynamic feed displaying available puppies
-2. A form for admin to add incoming puppies
-3. A form for fosters to give information on the puppy that they are currently fostering
-
-<img align="center" src="/puppyRescueFeed.png" width="450">
-<img align="center" src="/postIntake.png" width="200">
-<img align="center" src="/fosterForm.png" width="200">
-
 ## Tech
 NodeJS, Express, MongoDb, Mongoose, React, HTML, Material-UI
 Used AWS S3 buckets for loading images
 Built using a RESTful API
 Was deployed on Heroku
+
+## OverView 
+This app allows puppy fosters to share information regarding the puppies they are fostering to people looking to adopt from the rescue. This app includes:
+
+1. A dynamic feed displaying available puppies
+2. A form for admin to add incoming puppies
+3. A form for fosters to give information on the puppy that they are currently fostering
+<p align="center">
+  <img src="/puppyRescueFeed.png" width="500">
+  <img src="/postIntake.png" width="300">
+  <img src="/fosterForm.png" width="300">
+</p>
 
 ## Building and running on localhost
 
@@ -39,7 +40,7 @@ npm run build-dev
 
 ## Running
 
-Open the file `dist/index.html` in your browser
+`npm start` Then open localhost:3100 in your browser
 
 ## Credits
 
