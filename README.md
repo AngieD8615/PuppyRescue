@@ -14,6 +14,7 @@ This app allows puppy fosters to share information regarding the puppies they ar
 3. A form for fosters to give information on the puppy that they are currently fostering
 <p align="center">
   <img src="/puppyRescueFeed.png" width="500">
+  <br/>
   <img src="/postIntake.png" width="300">
   <img src="/fosterForm.png" width="300">
 </p>
